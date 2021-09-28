@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HolaMundoServlet
+ * Servlet implementation class HolaMundoVistaServlet
  */
-@WebServlet(name = "HolaMundo", urlPatterns = { "/HolaMundoCordial" })
-public class HolaMundoServlet extends HttpServlet {
+@WebServlet(name = "HolaMundoVista", urlPatterns = { "/HolaMundoVista" })
+public class HolaMundoVistaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HolaMundoServlet() {
+    public HolaMundoVistaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +30,6 @@ public class HolaMundoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/**
 		String nombre = (String) request.getParameter("NombreUsuario");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
@@ -38,11 +37,6 @@ public class HolaMundoServlet extends HttpServlet {
 		out.println("<HTML>");
 		out.println("<HEAD><TITLE>Hola Mundo!</TITLE></HEAD>");
 		out.println("<BODY>");
-		if ( nombre != null ){
-			out.println("<br>Hola "+nombre+"<br>");
-			}
-		out.println("Bienvenido a mi primera página Web!");
-		out.println("</BODY></HTML>");
 		
 		@SuppressWarnings("unchecked")
 		Vector<String> listado = (Vector<String>)request.getSession().getAttribute("listado");
@@ -67,15 +61,10 @@ public class HolaMundoServlet extends HttpServlet {
 			contador = new Integer(0);
 			}
 		// Establecemos el contador como atributo del contextbajo el nombre 
-		//contador. En caso de que ya existiera, sobreescribiríala referencia
+		// contador. En caso de que ya existiera, sobreescribiríala referencia
 		// existentecon la nueva.
 		getServletContext().setAttribute("contador",new Integer(contador.intValue()+1));
 		out.println("<br><br>" + contador +" visitas");
-		**/
-		
-		RequestDispatcher dispatcher = 
-				getServletContext().getNamedDispatcher("HolaMundoVista");
-		dispatcher.forward(request, response);
 	}
 
 	/**
