@@ -26,21 +26,17 @@ if ( producto != null ) {
 }
 //Añadimos el carrito a la sesión
 request.getSession().setAttribute("carrito",carrito);
-%>
-<br>
-<br>
-<H2>Carrito de la compra</h2>
-<br>
-<%
-Set<String> productos = carrito.keySet();
-Iterator<String> iter = productos.iterator();
-while ( iter.hasNext() ) {
-	String elemento = (String)iter.next();
-%>
-	<br>Del producto <%=elemento%>, <%=(Integer)carrito.get(elemento)%> unidades.
-<%	
+
+Integer contador = (Integer)application.getAttribute("contador");
+if( contador == null){
+	contador = new Integer(0);
 }
+application.setAttribute("contador",new Integer(contador.intValue()+1));
 %>
+<br>
+<%=contador%> visitas
+<br>
+
     
   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -72,5 +68,18 @@ while ( iter.hasNext() ) {
 			</tr>
 			</table>
 		</form>
+		<br>
+		<H2>Carrito de la compra</h2>
+		<br>
+		<%
+		Set<String> productos = carrito.keySet();
+		Iterator<String> iter = productos.iterator();
+		while ( iter.hasNext() ) {
+			String elemento = (String)iter.next();
+		%>
+			<br>Del producto <%=elemento%>, <%=(Integer)carrito.get(elemento)%> unidades.
+		<%	
+		}
+		%>
 </body>
 </html>
