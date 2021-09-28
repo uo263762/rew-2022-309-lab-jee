@@ -58,6 +58,16 @@ public class HolaMundoServlet extends HttpServlet {
 			out.println("<br>"+(String)listado.elementAt(i));
 			}
 		out.println("<a href=\"index.html\">volver</a>");
+		
+		Integer contador= (Integer) getServletContext().getAttribute("contador");
+		if ( contador == null ){
+			contador = new Integer(0);
+			}
+		// Establecemos el contador como atributo del contextbajo el nombre 
+		//contador. En caso de que ya existiera, sobreescribiríala referencia
+		// existentecon la nueva.
+		getServletContext().setAttribute("contador",new Integer(contador.intValue()+1));
+		out.println("<br><br>" + contador +" visitas");
 	}
 
 	/**
