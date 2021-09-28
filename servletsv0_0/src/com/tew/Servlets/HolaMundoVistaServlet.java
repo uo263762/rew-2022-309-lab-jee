@@ -2,6 +2,7 @@ package com.tew.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -37,7 +38,7 @@ public class HolaMundoVistaServlet extends HttpServlet {
 		out.println("<HTML>");
 		out.println("<HEAD><TITLE>Hola Mundo!</TITLE></HEAD>");
 		out.println("<BODY>");
-		
+		HashMap<Integer, String> a;
 		@SuppressWarnings("unchecked")
 		Vector<String> listado = (Vector<String>)request.getSession().getAttribute("listado");
 		if (listado == null){
