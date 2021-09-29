@@ -77,7 +77,7 @@ application.setAttribute("contador",new Integer(contador.intValue()+1));
 <H2>Carrito de la compra</h2>
 <br>
 <ul>
-  <jsp:useBean id="carrito" class="java.util.HashMap" scope="application"/> 
+
   <c:forEach var="entry" items="${carrito}"> 
     <li> 
       <c:out value="Del producto ${entry.key}, ${entry.value} unidades"/> 
