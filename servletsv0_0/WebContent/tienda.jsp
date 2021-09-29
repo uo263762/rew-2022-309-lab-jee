@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"    %>
 <%@ page import="java.util.*"    %>
+<%@ page language="java" import="com.tew.Beans.Counter"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+
+
+
 <%
 
 
@@ -7,7 +12,7 @@
 //Si no existe, lo creamos vacío. Será de tipo HashMap
 @SuppressWarnings("unchecked")
 
-HashMap<String,Integer> carrito =(HashMap<String,Integer>)request.getSession().getAttribute("carrito");
+HashMap<String,Integer> carrito =(HashMap<String,Integer>) request.getSession().getAttribute("carrito");
 
 if ( carrito == null ) {
 	carrito = new HashMap<String, Integer>();
@@ -26,16 +31,16 @@ if ( producto != null ) {
 }
 //Añadimos el carrito a la sesión
 request.getSession().setAttribute("carrito",carrito);
-
+/*
 Integer contador = (Integer)application.getAttribute("contador");
 if( contador == null){
 	contador = new Integer(0);
 }
 application.setAttribute("contador",new Integer(contador.intValue()+1));
+*/
+
 %>
-<br>
-<%=contador%> visitas
-<br>
+
 
     
   
@@ -68,18 +73,21 @@ application.setAttribute("contador",new Integer(contador.intValue()+1));
 			</tr>
 			</table>
 		</form>
-		<br>
-		<H2>Carrito de la compra</h2>
-		<br>
-		<%
-		Set<String> productos = carrito.keySet();
-		Iterator<String> iter = productos.iterator();
-		while ( iter.hasNext() ) {
-			String elemento = (String)iter.next();
-		%>
-			<br>Del producto <%=elemento%>, <%=(Integer)carrito.get(elemento)%> unidades.
-		<%	
-		}
-		%>
+<br>
+<H2>Carrito de la compra</h2>
+<br>
+<ul>
+  <jsp:useBean id="carrito" class="java.util.HashMap" scope="application"/> 
+  <c:forEach var="entry" items="${carrito}"> 
+    <li> 
+      <c:out value="Del producto ${entry.key}, ${entry.value} unidades"/> 
+    </li> 
+  </c:forEach> 
+</ul>
+		
+<jsp:useBean id="contador" class="com.tew.Beans.Counter" scope="application"/> 
+
+<jsp:getProperty property="incrementedValue" name="contador"/> visitas
+
 </body>
 </html>
