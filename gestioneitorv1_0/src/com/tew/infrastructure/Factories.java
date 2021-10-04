@@ -64,7 +64,7 @@ public class Factories {
 	public String salva() {
 		AlumnosService service;
 		try {
-		// Acceso a la implementacion de la capa de negocio
+			// Acceso a la implementacion de la capa de negocio
 			// a través de la factoría
 			service = Factories.services.createAlumnosService();
 			//Salvamos o actualizamos el alumno segun sea una operacion de alta o de edición
@@ -81,4 +81,20 @@ public class Factories {
 			e.printStackTrace();
 			return "error";
 			}
+	}
+
+	public String baja() {
+		AlumnosService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a través de la factoría
+			service = Factories.services.createAlumnosService();
+			// Asi le damos información a toArray para poder hacer el casting a Alumno[]
+			service.deleteAlumno(alumnos.getId());
+			return "exito";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
 }
