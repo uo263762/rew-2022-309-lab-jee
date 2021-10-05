@@ -3,6 +3,8 @@ package com.tew.presentation;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -21,15 +23,33 @@ public class BeanAlumnos implements Serializable {
 	// Es necesario inicializarlo para que al entrar desde el formulario de
 	// AltaForm.xhtml se puedan dejar los valores en un objeto existente.
 	
+	
 
-	private Alumno alumno = new Alumno();
-
-	public Alumno getAlumno() {
-		return alumno;
+	//uso de inyección de dependencia
+	@ManagedProperty(value="#{alumno}")
+	private BeanAlumno alumno;
+	public BeanAlumno getAlumno() { return alumno; }
+	public void setAlumno(BeanAlumno alumno) {this.alumno = alumno;}
+	
+	//Se inicia correctamente el MBean inyectado si JSF lo hubiera crea
+	//y en caso contrario se crea. (hay que tener en cuenta que es un Bean de sesión)
+	//Se usa @PostConstruct, ya que en el contructor no se sabe todavía si el Managed Bean
+	//ya estaba construido y en @PostConstruct SI.
+	@PostConstruct
+	public void init() {
+	System.out.println("BeanAlumnos - PostConstruct");
+	//Buscamos el alumno en la sesión. Esto es un patrón factoría claramente.
+	alumno = (BeanAlumno) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(new String("alumno"));
+	//si no existe lo creamos e inicializamos
+	if (alumno == null) {
+	System.out.println("BeanAlumnos - No existia");
+	alumno = new BeanAlumno();
+	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put( "alumno", alumno);
 	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	}
+	@PreDestroy
+	public void end() {
+	System.out.println("BeanAlumnos - PreDestroy");
 	}
 
 	public Alumno[] getAlumnos() {
@@ -42,17 +62,13 @@ public class BeanAlumnos implements Serializable {
 
 	private Alumno[] alumnos = null;
 
+	/*
 	public BeanAlumnos() {
 		iniciaAlumno(null);
 	}
-
+	*/
+	
 	public void iniciaAlumno(ActionEvent event) {
-		/*
-		 * alumno.setId(null); alumno.setIduser("IdUser");
-		 * alumno.setNombre("Nombre");
-		 * alumno.setApellidos("Apellidos");
-		 * alumno.setEmail("email@domain.com");
-		 */
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		// Obtenemos el archivo de propiedades correspondiente al idioma que
 		// esta seleccionado y que viene envuelto en facesContext
@@ -63,6 +79,7 @@ public class BeanAlumnos implements Serializable {
 		alumno.setApellidos(bundle.getString("valorDefectoApellidos"));
 		alumno.setEmail(bundle.getString("valorDefectoCorreo"));
 	}
+	 
 
 	public String listado() {
 		AlumnosService service;
@@ -86,7 +103,7 @@ public class BeanAlumnos implements Serializable {
 			// a travÃ©s de la factorÃ­a
 			service = Factories.services.createAlumnosService();
 			// Recargamos el alumno en la tabla de la base de datos por si hubiera cambios.
-			alumno = service.findById(alumno.getId());
+			alumno = (BeanAlumno) service.findById(alumno.getId());
 			return "exito";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,7 +133,7 @@ public class BeanAlumnos implements Serializable {
 		}
 	}
 
-	public String baja() {
+	public String baja(Alumno alumno) {
 		AlumnosService service;
 		try {
 			// Acceso a la implementacion de la capa de negocio
