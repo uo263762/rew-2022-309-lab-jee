@@ -38,7 +38,7 @@ public class Factories {
 			// a través de la factoría
 			service = Factories.services.createAlumnosService();
 			// Asi le damos información a toArray para poder hacer el casting a Alumno[]
-			alumnos = (Alumno[]) service.getAlumnos().toArray(new Alumno[0]);
+			Alumno[] alumnos = (Alumno[]) service.getAlumnos().toArray(new Alumno[0]);
 			return "exito";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class Factories {
 			// a través de la factoría
 			service = Factories.services.createAlumnosService();
 			// Recargamos el alumno en la tabla de la base de datos por si hubiera cambios.
-			alumno = service.findById(alumno.getId());
+			Alumno alumno = service.findById(alumno.getId());
 			return "exito";
 		} catch (Exception e) {
 			e.printStackTrace();
