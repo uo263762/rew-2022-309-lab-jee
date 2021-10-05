@@ -20,6 +20,7 @@ public class BeanAlumnos implements Serializable {
 	// de la tabla o de un formulario.
 	// Es necesario inicializarlo para que al entrar desde el formulario de
 	// AltaForm.xhtml se puedan dejar los valores en un objeto existente.
+	
 
 	private Alumno alumno = new Alumno();
 
