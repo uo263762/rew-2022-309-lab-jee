@@ -9,13 +9,14 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-@ManagedBean
+@ManagedBean(name = "settings")
 @SessionScoped
 public class BeanSettings implements Serializable {
 	private static final long serialVersionUID = 2L;
 	private static final Locale ENGLISH = new Locale("en");
 	private static final Locale SPANISH = new Locale("es");
 	private Locale locale = new Locale("es");
+
 	// uso de inyección de dependencia
 	@ManagedProperty(value = "#{alumno}")
 	private BeanAlumno alumno;
@@ -52,8 +53,6 @@ public class BeanSettings implements Serializable {
 	public void end() {
 		System.out.println("BeanSettings - PreDestroy");
 	}
-	
-	
 
 	public Locale getLocale() {
 		/*
@@ -66,24 +65,24 @@ public class BeanSettings implements Serializable {
 	public void setSpanish(ActionEvent event) {
 		locale = SPANISH;
 		try {
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-		if (alumno != null)
-		if (alumno.getId()== null) //valores por defecto del alumno, si no NO inicializar
-		alumno.iniciaAlumno(null);
-		} catch (Exception ex){
-		ex.printStackTrace();
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			if (alumno != null)
+				if (alumno.getId() == null) // valores por defecto del alumno, si no NO inicializar
+					alumno.iniciaAlumno(null);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		}
+	}
 
 	public void setEnglish(ActionEvent event) {
 		locale = ENGLISH;
 		try {
-		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-		if (alumno != null)
-		if (alumno.getId()== null) //valores por defecto del alumno, si no NO inicializar
-		alumno.iniciaAlumno(null);
-		} catch (Exception ex){
-		ex.printStackTrace();
+			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			if (alumno != null)
+				if (alumno.getId() == null) // valores por defecto del alumno, si no NO inicializar
+					alumno.iniciaAlumno(null);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 }
