@@ -30,7 +30,8 @@
 	
 	
 	
-	<!-- Servlet resteasy que se encarga de procesar las peticiones correspondientes a servicios REST. Lleva un parámetro de inicialización donde deben estar registradas todas las clases que implementan servicios REST en esta aplicación web -->
+
+
 	<servlet>
 		<servlet-name>resteasy</servlet-name>
 			<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -48,4 +49,14 @@
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
 		<param-value>/rs</param-value>
 	</context-param>
+	
+	<servlet>
+		<servlet-name>resteasy-jsapi</servlet-name>
+		<servlet-class>org.jboss.resteasy.jsapi.JSAPIServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>resteasy-jsapi</servlet-name>
+		<url-pattern>/rest-jsapi</url-pattern>
+	</servlet-mapping>
 </web-app>
